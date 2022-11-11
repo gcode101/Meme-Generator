@@ -13,7 +13,8 @@ function Meme() {
 
 	const [allMemeImages, setAllMemeImages] = React.useState(memesData);
 
-	function getMemeImage() {
+	function getMemeImage(e) {
+		e.preventDefault();
 		const memesArray = allMemeImages.data.memes;
 		const randomNumber = Math.floor(Math.random() * memesArray.length);
 		const url = memesArray[randomNumber].url
@@ -39,7 +40,6 @@ function Meme() {
 			</form>
 			<div className="meme">
 				<img src={meme.randomImage} className="meme--image"/>
-				
 				<h2 className="meme--text top">One does not simply</h2>
 				<h2 className="meme--text bottom">Walk into mordor</h2>
 			</div>
