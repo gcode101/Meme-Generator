@@ -1,6 +1,5 @@
 
 import React from "react";
-import memesData from "../memesData.js";
 
 
 function Meme() {
@@ -11,7 +10,13 @@ function Meme() {
 		randomImage: "http://i.imgflip.com/1bij.jpg"
 	});
 
-	const [allMemes, setAllMemes] = React.useState(memesData);
+	const [allMemes, setAllMemes] = React.useState([]);
+
+	React.useEffect(function () {
+		fetch("https://api.imgflip.com/get_memes")
+			.then(res=>res.json())
+			.then(data=> setAllMemes(data.data.memes))
+	}, [])
 
 	function getMemeImage(e) {
 		e.preventDefault();
@@ -35,12 +40,6 @@ function Meme() {
 		});
 
 	}
-
-	React.useEffect(function () {
-		fetch("https://api.imgflip.com/get_memes")
-			.then(res=>res.json())
-			.then(data=> setAllMemes(data.data.memes))
-	}, [])
 
 	return (
 		<main className="main--form">
