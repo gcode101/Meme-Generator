@@ -11,13 +11,12 @@ function Meme() {
 		randomImage: "http://i.imgflip.com/1bij.jpg"
 	});
 
-	const [allMemeImages, setAllMemeImages] = React.useState(memesData);
+	const [allMemes, setAllMemes] = React.useState(memesData);
 
 	function getMemeImage(e) {
 		e.preventDefault();
-		const memesArray = allMemeImages.data.memes;
-		const randomNumber = Math.floor(Math.random() * memesArray.length);
-		const url = memesArray[randomNumber].url
+		const randomNumber = Math.floor(Math.random() * allMemes.length);
+		const url = allMemes[randomNumber].url
 		setMeme(prevMeme => {
 			return ({
 				...prevMeme,
@@ -36,6 +35,12 @@ function Meme() {
 		});
 
 	}
+
+	React.useEffect(function () {
+		fetch("https://api.imgflip.com/get_memes")
+			.then(res=>res.json())
+			.then(data=> setAllMemes(data.data.memes))
+	}, [])
 
 	return (
 		<main className="main--form">
